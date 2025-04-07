@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Shopify</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_and_config.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}" class="logo-link">
+            <div class="logo">
+                <span>E-Analistic</span>
+            </div>
+        </a>
+    </header>
+    <main class="container">
+        <h1>Installation de votre boutique Shopify</h1>
+        <p>Entrez le domaine de votre boutique Shopify pour commencer (ex. : mon-boutique.myshopify.com).</p>
+        {% if error %}
+            <p class="error-message">{{ error }}</p>
+        {% endif %}
+        <form method="POST" action="{{ url_for('install') }}">
+            <div class="form-group">
+                <label for="shop">Domaine Shopify :</label>
+                <input type="text" id="shop" name="shop" placeholder="mon-boutique.myshopify.com" required>
+            </div>
+            <button type="submit" class="btn">Continuer</button>
+        </form>
+    </main>
+    <div id="waiting-message" style="display: none; text-align: center;">
+        <p>Connexion à votre boutique Shopify... Veuillez patienter.</p>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("form");
+            const waitingMessage = document.getElementById("waiting-message");
+    
+            if (form) {
+                form.addEventListener("submit", function () {
+                    waitingMessage.style.display = "block";
+                });
+            }
+        });
+    </script>    
+</body>
+</html>

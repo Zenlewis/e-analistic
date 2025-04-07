@@ -1,0 +1,9 @@
+{
+  "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react" // ou un autre preset si vous utilisez React
+  ],
+  "plugins": [
+      "@babel/plugin-proposal-optional-chaining"
+  ]
+}

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paiement requis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+    <h1>Essai gratuit terminé</h1>
+    <p>Votre essai gratuit pour {{ shop_url }} a expiré.</p>
+    <p>Veuillez souscrire à un abonnement pour continuer à utiliser Insights Prevision.</p>
+    <a href="{{ url_for('subscribe') }}">Souscrire maintenant (20 USD)</a>
+</body>
+</html>

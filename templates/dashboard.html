@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="description" content="Tableau de bord des prévisions pour e-commerce.">
+    <meta name="keywords" content="e-commerce, prévisions, tableau de bord, analyses">
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}" class="logo-link">
+            <div class="logo" style="color: #007BFF; font-size: 24px; font-weight: bold;">
+                <span>E-Analistic</span>
+            </div>            
+        </a>
+        <!--<div class="language-selector">
+            <select id="language-select" onchange="changeLanguage()">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+            </select>
+        </div>-->
+    </header>
+    <main class="container">
+        <h1 id="forecast-title">Vos Prévisions</h1>
+        
+        <div class="widget">
+            <h2 id="monthly-forecast-title">Prévision Mensuelle</h2>
+            <p class="success" id="monthly-forecast-value">{{ monthly_forecast }} {{ currency }}</p>
+            <p id="monthly-forecast-range">Plage estimée : {{ min_mensuelle }} {{ currency }} - {{ max_mensuelle }} {{ currency }}</p>
+            {% if data_limited %}
+            <p class="warning">Attention : Prévisions basées sur des données limitées.</p>
+            {% endif %}
+        </div>
+        
+        <div class="widget">
+            <h2 id="daily-forecast-title">Prévisions Quotidiennes (7 prochains jours)</h2>
+            <canvas id="dailyChart" height="100"></canvas>
+        </div>
+    
+        <div class="widget">
+            <h2 id="insights-title">Insights</h2>
+            <p><strong id="top-product-label">Produit le plus vendu :</strong> <span id="top-product-value">{{ best_selling_product }}</span></p>
+            <p><strong>Prévision mensuelle pour {{ best_selling_product }} :</strong> <span>{{ top_product_forecast }} {{ currency }}</span></p>
+            <p><strong id="trend-label">Tendance (30 derniers jours) :</strong> <span id="trend-value">{{ trend }}</span></p>
+        </div>
+        
+        <!--<a href="{{ url_for('home') }}" class="btn" id="logout-btn">Déconnexion</a>-->
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const quotidiennes = JSON.parse('{{ daily_forecast|tojson|safe }}');
+            const dates = JSON.parse('{{ future_dates|tojson|safe }}');
+
+            const ctx = document.getElementById('dailyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: 'Ventes prévues',
+                        data: quotidiennes,
+                        borderColor: '#4A90E2',
+                        backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+            const translations = {
+                fr: {},
+                en: {}
+            };
+
+            Promise.all([
+                fetch('/static/translations/fr.json').then(response => response.json()),
+                fetch('/static/translations/en.json').then(response => response.json())
+            ]).then(([frTranslations, enTranslations]) => {
+                translations.fr = frTranslations;
+                translations.en = enTranslations;
+                changeLanguage();
+            });
+
+            function changeLanguage() {
+                const selectedLanguage = document.getElementById('language-select').value;
+                if (translations[selectedLanguage]) {
+                    const elements = [
+                        { id: 'forecast-title', prop: 'innerText', translationKey: 'forecastTitle' },
+                        { id: 'monthly-forecast-title', prop: 'innerText', translationKey: 'monthlyForecastTitle' },
+                        { id: 'daily-forecast-title', prop: 'innerText', translationKey: 'dailyForecastTitle' },
+                        { id: 'insights-title', prop: 'innerText', translationKey: 'insightsTitle' },
+                        { id: 'top-product-label', prop: 'innerText', translationKey: 'topProductLabel' },
+                        { id: 'trend-label', prop: 'innerText', translationKey: 'trendLabel' },
+                        { id: 'logout-btn', prop: 'innerText', translationKey: 'logoutBtn' }
+                    ];
+
+                    elements.forEach(element => {
+                        const el = document.getElementById(element.id);
+                        if (el) {
+                            el[element.prop] = translations[selectedLanguage][element.translationKey];
+                        }
+                    });
+                } else {
+                    console.error("La langue sélectionnée n'est pas disponible dans les traductions.");
+                }
+            }
+
+            const languageSelector = document.getElementById('language-select');
+            if (languageSelector) {
+                languageSelector.value = 'fr';
+            }
+            changeLanguage();
+        });
+    </script>
+</body>
+</html>

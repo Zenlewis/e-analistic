@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Souscrire à Insights Prevision</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <style>
+        body {
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Souscrire à l'abonnement</h1>
+    <p>Payer 20 USD pour continuer à utiliser Insights Prevision.</p>
+    <form method="POST">
+        <button type="submit">Payer avec PayPal ou Carte</button>
+    </form>
+</body>
+</html>

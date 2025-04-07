@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Analistic - Transformez Vos Données E-commerce en Réussite</title>
+    <meta name="description" content="E-Analistic - Optimisez vos ventes et boostez votre croissance grâce à des analyses e-commerce intelligentes. Rejoignez-nous et prenez des décisions éclairées dès aujourd'hui.">
+    <meta name="keywords" content="e-commerce, analyses, E-Analistic, insights, ventes, données, performance">
+    <meta name="author" content="E-Analistic">
+    <meta name="robots" content="index, follow">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="professional-header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="{{ url_for('home') }}" class="logo-link" aria-label="Accueil E-Analistic">E-Analistic</a>
+            </div>
+    
+            <!-- Menu de navigation -->
+            <nav class="nav-menu" aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li><a href="#about" id="menu-about" aria-label="À propos">À propos</a></li>
+                    <li><a href="#features" id="menu-features" aria-label="Fonctionnalités">Fonctionnalités</a></li>
+                    <li><a href="#contact" id="menu-contact" aria-label="Contact">Contact</a></li>
+                    <!--<li><a href="{{ url_for('login') }}" class="btn-login" aria-label="Connexion">Connexion</a></li>-->
+                </ul>
+            </nav>
+    
+            <!-- Sélecteur de langue -->
+            <!--<div class="language-selector">
+                <select id="language-select" onchange="changeLanguage()" aria-label="Select language">
+                    <option value="fr">FR</option>
+                    <option value="en">EN</option>
+                </select>
+            </div>-->
+    
+            <!-- Menu Burger (mobile) -->
+            <div class="menu-icon" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+                <div class="hamburger-menu">&#9776;</div>
+                <div class="close-menu hidden">&#10005;</div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- Section Hero -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 id="hero-title">Transformez Vos Données E-commerce en Opportunités Concrètes</h1>
+                <p id="hero-description">Avec E-Analistic, exploitez la puissance de vos données pour augmenter vos ventes, comprendre vos clients et anticiper les tendances. Maximisez votre rentabilité dès aujourd'hui.</p>
+                <a href="{{ url_for('install') }}" class="btn-primary" id="hero-button">Démarrer l'Essai Gratuit</a>
+            </div>
+        </section>        
+
+        <!-- Section À Propos -->
+        <section id="about" class="about-section">
+            <div class="about-content">
+                <h2 id="about-title">À Propos de Nous</h2>
+                <p id="about-description">E-Analistic est la plateforme ultime pour les commerçants en ligne qui souhaitent prendre le contrôle de leurs données. Grâce à des outils d'analyse puissants et intuitifs, nous vous aidons à transformer vos chiffres en stratégies gagnantes.</p>
+            </div>
+        </section>
+
+        <!-- Section Fonctionnalités -->
+        <section id="features" class="features-section">
+            <h2 id="features-title">Découvrez Nos Fonctionnalités</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3 id="feature-sales-text">Analyse des Ventes en Temps Réel</h3>
+                    <p id="feature-sales-description">Suivez vos performances commerciales en direct et identifiez les opportunités pour booster vos ventes.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 id="feature-reports-text">Rapports Personnalisés</h3>
+                    <p id="feature-reports-description">Générez des rapports détaillés et personnalisés pour mesurer l'impact de vos actions.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 id="feature-forecasts-text">Prévisions Intelligentes</h3>
+                    <p id="feature-forecasts-description">Anticipez les tendances du marché et planifiez vos stratégies avec des prévisions basées sur l'IA.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 id="feature-insights-text">Insights Produits</h3>
+                    <p id="feature-insights-description">Découvrez quels produits performent le mieux et ajustez vos campagnes marketing en conséquence.</p>
+                </div>
+                <div class="feature-item">
+                    <h3 id="feature-shopify-text">Intégration Shopify Fluide</h3>
+                    <p id="feature-shopify-description">Connectez votre boutique Shopify en quelques clics et accédez à des insights instantanés.</p>
+                </div>
+            </div>
+        </section>
+        <!-- Section Contact -->
+        <section id="contact" class="contact-section">
+            <h2 id="contact-title">Contactez Notre Équipe</h2>
+            <p id="contact-description">Vous avez des questions ou besoin d'un accompagnement personnalisé ? Notre équipe est là pour vous aider. Écrivez-nous à <a href="mailto:support@e-analistic.com" class="contact-link" aria-label="Contactez-nous par email">eanalistic@gmail.com</a>.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">&copy; 2025 E-Analistic. Tous droits réservés. <a href="#" class="footer-privacy" style="color: var(--white); text-decoration: underline;">Politique de confidentialité</a> | <a href="#" class="footer-terms" style="color: var(--white); text-decoration: underline;">Conditions d'utilisation</a></p>
+    </footer>
+
+    <!-- Scripts JavaScript -->
+    <script>
+        let translations = {}; // Variable globale pour stocker les traductions
+
+        // Charger les traductions depuis le fichier JSON
+        async function loadTranslations(lang) {
+            try {
+                const response = await fetch(`/static/translations/${lang}.json`); // Chemin vers vos fichiers JSON
+                translations[lang] = await response.json();
+            } catch (error) {
+                console.error(`Erreur lors du chargement des traductions pour ${lang}:`, error);
+            }
+        }
+
+        // Appliquer les traductions à la page
+        async function changeLanguage() {
+            const selectedLanguage = document.getElementById('language-select').value;
+
+            // Charger les traductions si elles ne sont pas déjà chargées
+            if (!translations[selectedLanguage]) {
+                await loadTranslations(selectedLanguage);
+            }
+
+            const lang = translations[selectedLanguage];
+
+            if (lang) {
+                // Menu de navigation
+                document.getElementById('menu-about').innerText = lang.aboutUs || "À propos";
+                document.getElementById('menu-features').innerText = lang.features || "Fonctionnalités";
+                document.getElementById('menu-contact').innerText = lang.contactUs || "Contact";
+
+                // Section Hero
+                document.getElementById('hero-title').innerText = lang.heroTitle || "Transformez Vos Données E-commerce en Opportunités Concrètes";
+                document.getElementById('hero-description').innerText = lang.heroDescription || "Avec E-Analistic, exploitez la puissance de vos données pour augmenter vos ventes...";
+                document.getElementById('hero-button').innerText = lang.heroButton || "Démarrer l'Essai Gratuit";
+
+                // Section À Propos
+                document.getElementById('about-title').innerText = lang.aboutTitle || "À Propos de Nous";
+                document.getElementById('about-description').innerText = lang.aboutDescription || "E-Analistic est la plateforme ultime pour les commerçants en ligne...";
+
+                // Section Fonctionnalités
+                document.getElementById('features-title').innerText = lang.featuresTitle || "Découvrez Nos Fonctionnalités";
+                document.getElementById('feature-sales-text').innerText = lang.featureSales || "Analyse des Ventes en Temps Réel";
+                document.getElementById('feature-reports-text').innerText = lang.featureReports || "Rapports Personnalisés";
+                document.getElementById('feature-forecasts-text').innerText = lang.featureForecasts || "Prévisions Intelligentes";
+                document.getElementById('feature-insights-text').innerText = lang.featureInsights || "Insights Produits";
+                document.getElementById('feature-shopify-text').innerText = lang.featureShopify || "Intégration Shopify Fluide";
+                document.getElementById('feature-sales-description').innerText = lang.featureSalesDescription || "Suivez vos performances commerciales en direct...";
+                document.getElementById('feature-reports-description').innerText = lang.featureReportsDescription || "Générez des rapports détaillés...";
+                document.getElementById('feature-forecasts-description').innerText = lang.featureForecastsDescription || "Anticipez les tendances du marché...";
+                document.getElementById('feature-insights-description').innerText = lang.featureInsightsDescription || "Découvrez quels produits performent le mieux...";
+                document.getElementById('feature-shopify-description').innerText = lang.featureShopifyDescription || "Connectez votre boutique Shopify...";
+
+                // Section Contact
+                document.getElementById('contact-title').innerText = lang.contactTitle || "Contactez Notre Équipe";
+                document.getElementById('contact-description').innerText = lang.contactDescription || "Vous avez des questions ou besoin d'un accompagnement personnalisé ?";
+
+                // Footer
+                document.querySelector('.footer-text').innerText = lang.footerText || "© 2025 E-Analistic. Tous droits réservés.";
+                document.querySelector('.footer-privacy').innerText = lang.footerPrivacy || "Politique de confidentialité";
+                document.querySelector('.footer-terms').innerText = lang.footerTerms || "Conditions d'utilisation";
+            } else {
+                console.error("Langue non supportée ou traductions non chargées :", selectedLanguage);
+            }
+        }
+
+        // Charger la langue par défaut au démarrage
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userLanguage = navigator.language.slice(0, 2); // "fr" ou "en"
+            const supportedLanguages = ["fr", "en"];
+            const defaultLanguage = supportedLanguages.includes(userLanguage) ? userLanguage : "en";
+
+            // Charger les traductions pour la langue par défaut
+            await loadTranslations(defaultLanguage);
+
+            // Appliquer les traductions
+            document.getElementById('language-select').value = defaultLanguage;
+            changeLanguage();
+        });
+
+        // Basculer le menu mobile
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const closeMenu = document.querySelector('.close-menu');
+
+            navMenu.classList.toggle('show');
+            hamburgerMenu.classList.toggle('hidden');
+            closeMenu.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

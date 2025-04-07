@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des utilisateurs</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <style>
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste des utilisateurs</h1>
+    <p>Total : {{ users|length }}</p>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Boutique</th>
+            <th>Fin de l'essai</th>
+            <th>Statut</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.shop_url }}</td>
+            <td>{{ user.trial_end }}</td>
+            <td>{{ user.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

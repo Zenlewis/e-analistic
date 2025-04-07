@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login_and_config.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/translations.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <a href="{{ url_for('home') }}" class="logo-link">
+            <div class="logo">
+                <span>E-Analistic</span>
+            </div>
+        </a>
+        <!--<div class="language-selector">
+            <select id="language-select" onchange="changeLanguage()">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+            </select>
+        </div>-->
+    </header>
+    <main class="container">
+        <h1 id="config-title">Inscription</h1>
+        <p id="config-description">Créez votre compte pour commencer.</p>
+
+        <form method="POST" action="{{ url_for('login_and_config') }}">
+            <div class="form-group">
+                <label for="email" id="email-label">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password" id="password-label">Mot de passe:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password" id="confirm-password-label">Confirmez le mot de passe:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="btn" id="signup-button">S'inscrire</button>
+        </form>
+
+        <p id="login-redirect">Déjà un compte ? <a href="{{ url_for('login') }}" class="btn-link" id="login-link">Connexion</a></p>
+    </main>
+    <script>
+        // Même logique de traduction que dans ton code original, ajustée pour moins de champs
+        const loginUrl = "{{ url_for('login') }}";
+        const translations = {
+            fr: {
+                configTitle: "Inscription",
+                configDescription: "Créez votre compte pour commencer.",
+                emailLabel: "E-mail:",
+                passwordLabel: "Mot de passe:",
+                confirmPasswordLabel: "Confirmez le mot de passe:",
+                signupButton: "S'inscrire",
+                loginRedirect: "Déjà un compte ? ",
+                loginLink: "Connexion"
+            },
+            en: {
+                configTitle: "Sign Up",
+                configDescription: "Create your account to get started.",
+                emailLabel: "Email:",
+                passwordLabel: "Password:",
+                confirmPasswordLabel: "Confirm Password:",
+                signupButton: "Sign Up",
+                loginRedirect: "Already have an account? ",
+                loginLink: "Login"
+            }
+        };
+
+        function changeLanguage() {
+        const selectedLanguage = document.getElementById('language-select').value;
+        if (translations[selectedLanguage]) {
+            document.getElementById('config-title').innerText = translations[selectedLanguage].configTitle;
+            document.getElementById('config-description').innerText = translations[selectedLanguage].configDescription;
+            document.getElementById('email-label').innerText = translations[selectedLanguage].emailLabel;
+            document.getElementById('password-label').innerText = translations[selectedLanguage].passwordLabel;
+            document.getElementById('confirm-password-label').innerText = translations[selectedLanguage].confirmPasswordLabel;
+            document.getElementById('shop-url-label').innerText = translations[selectedLanguage].shopUrlLabel;
+            document.getElementById('api-key-label').innerText = translations[selectedLanguage].apiKeyLabel;
+            document.getElementById('api-secret-label').innerText = translations[selectedLanguage].apiSecretLabel;
+            document.getElementById('signup-button').innerText = translations[selectedLanguage].signupButton;
+            document.getElementById('login-redirect').innerHTML = translations[selectedLanguage].loginRedirect + '<a href="' + loginUrl + '" class="btn-link" id="login-link">' + translations[selectedLanguage].loginLink + '</a>';
+        } else {
+            console.error("La langue sélectionnée n'est pas disponible dans les traductions.");
+        }
+    }
+    // Initialiser avec la langue par défaut (français)
+    document.addEventListener("DOMContentLoaded", function() {
+        const languageSelector = document.getElementById('language-select');
+        if (languageSelector) {
+            languageSelector.value = 'fr';
+        }
+        changeLanguage();
+    });
+
+    function toggleMenu() {
+        var navLinks = document.getElementById("nav-links");
+        navLinks.classList.toggle("show");
+    }
+</script>
